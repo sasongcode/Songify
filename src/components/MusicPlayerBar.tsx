@@ -65,12 +65,16 @@ export default function MusicPlayerBar({ sidebarOpen }: { sidebarOpen: boolean }
           alt={currentSong.title}
           className="w-10 h-10 md:w-12 md:h-12 rounded-md object-cover"
         />
-        <div className="truncate">
-          <h4 className="text-sm font-semibold text-white truncate">
-            {currentSong.title}
-          </h4>
-          <p className="text-xs text-zinc-400 truncate">{currentSong.artist}</p>
-        </div>
+ <div className="max-w-full">
+<h4 className="text-sm font-semibold text-white whitespace-nowrap overflow-hidden text-ellipsis md:truncate">
+  {currentSong.title}
+</h4>
+
+  <p className="text-xs text-zinc-400 break-words md:truncate">
+    {currentSong.artist}
+  </p>
+</div>
+
       </div>
 
       <div className="hidden md:flex flex-col items-center w-2/4">
