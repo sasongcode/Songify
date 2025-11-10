@@ -70,7 +70,7 @@ export default function MusicPlayerBar({ sidebarOpen }: { sidebarOpen: boolean }
   {currentSong.title}
 </h4>
 
-  <p className="text-xs text-zinc-400 break-words md:truncate">
+  <p className="text-xs text-zinc-400 wrap-break-words md:truncate">
     {currentSong.artist}
   </p>
 </div>

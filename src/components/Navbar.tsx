@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { Bell, User, HomeIcon, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -9,15 +9,45 @@ interface NavbarProps {
 }
 
 export default function Navbar({ sidebarOpen }: NavbarProps) {
-  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [isSearching, setIsSearching] = useState(false);
+
+  // Ketika pindah halaman, reset search bar dan hapus query
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.value = "";
+      inputRef.current.blur();
+    }
+    localStorage.removeItem("searchQuery");
+    setIsSearching(false);
+  }, [location.pathname]); // jalankan setiap path berubah
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && searchQuery.trim()) {
-      navigate(`/search?query=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery("");
+    if (e.key === "Enter" && inputRef.current) {
+      const query = inputRef.current.value.trim();
+      if (query) {
+        localStorage.setItem("searchQuery", query);
+        navigate(`/search?query=${encodeURIComponent(query)}`);
+        setIsSearching(true); // masuk mode hasil pencarian
+        inputRef.current.blur();
+      }
     }
   };
+
+  const handleFocus = () => {
+    setIsSearching(false); // keluar mode hasil pencarian
+  };
+
+  // Saat reload, ambil query terakhir agar tetap muncul
+  useEffect(() => {
+    const savedQuery = localStorage.getItem("searchQuery");
+    if (savedQuery && inputRef.current) {
+      inputRef.current.value = savedQuery;
+      setIsSearching(true);
+    }
+  }, []);
 
   return (
     <header
@@ -28,10 +58,7 @@ export default function Navbar({ sidebarOpen }: NavbarProps) {
           sidebarOpen ? "md:ml-50" : "md:ml-21"
         }`}
       >
-        <Link
-          to="/"
-          className="text-zinc-400 hover:text-green-400 transition"
-        >
+        <Link to="/" className="text-zinc-400 hover:text-green-400 transition">
           <HomeIcon size={24} />
         </Link>
 
@@ -39,12 +66,17 @@ export default function Navbar({ sidebarOpen }: NavbarProps) {
         <div className="relative flex-1 max-w-[200px] sm:max-w-xs md:max-w-sm">
           <Search size={16} className="absolute left-3 top-2.5 text-zinc-400" />
           <input
+            ref={inputRef}
             type="text"
             placeholder="What do you want to hear..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="bg-zinc-800 text-sm text-white rounded-full px-4 py-2 pl-9 w-full md:w-75 focus:outline-none focus:ring-1 focus:ring-green-400 placeholder-zinc-500"
+            onFocus={handleFocus}
+            className={`text-sm text-white rounded-full px-4 py-2 pl-9 w-full md:w-75 focus:outline-none placeholder-zinc-500 transition-all duration-200
+              ${
+                isSearching
+                  ? "bg-zinc-700 focus:ring-0 text-zinc-300" // mode hasil pencarian
+                  : "bg-zinc-800 focus:ring-1 focus:ring-green-400"
+              }`}
           />
         </div>
       </div>
