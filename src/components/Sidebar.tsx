@@ -15,7 +15,7 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
     // { icon: <Music size={20} />, label: "Songs", path: "/songs" },
     { icon: <Compass size={20} />, label: "Genres", path: "/genres" },
     { icon: <Users size={20} />, label: "Artists", path: "/artists" },
-    { icon: <Library size={20} />, label: "Library", path: "/library" },
+    { icon: <Library size={20} />, label: "Library", path: "/playlist" },
   ];
 
   return (
