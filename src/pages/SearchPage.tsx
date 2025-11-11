@@ -62,13 +62,47 @@ export default function SearchPage() {
     );
   }
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-[60vh] text-zinc-400">
-        Mencari hasil untuk "{query}"...
-      </div>
-    );
-  }
+if (loading) {
+  return (
+    <div className="space-y-12 py-10 px-4 sm:px-8">
+      <SectionTitle title={`Mencari hasil untuk "${query}"...`} />
+
+      {/* Skeleton Lagu */}
+      <section>
+        <h3 className="text-xl font-semibold mb-4">Lagu</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div
+              key={i}
+              className="animate-pulse flex flex-col space-y-3 bg-zinc-800/40 rounded-xl p-3"
+            >
+              <div className="w-full aspect-square bg-zinc-700 rounded-lg" />
+              <div className="h-4 bg-zinc-700 rounded w-3/4 mx-auto" />
+              <div className="h-3 bg-zinc-700 rounded w-1/2 mx-auto" />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Skeleton Artis */}
+      <section>
+        <h3 className="text-xl font-semibold mb-4">Artis</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div
+              key={i}
+              className="animate-pulse flex flex-col items-center space-y-3 bg-zinc-800/40 rounded-xl p-3"
+            >
+              <div className="w-24 h-24 bg-zinc-700 rounded-full" />
+              <div className="h-3 bg-zinc-700 rounded w-2/3" />
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
 
   return (
     <div className="space-y-12 py- mt-">
