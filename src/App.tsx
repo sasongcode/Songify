@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import SearchPage from "./pages/SearchPage";
 import NotFound from "./pages/NotFound";
 import PlaylistPage from "./pages/PlaylistPage";
+import Trending from "./pages/Trending";
 
 export default function App() {
   return (
@@ -13,8 +14,9 @@ export default function App() {
           <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           
-<Route path="/playlist" element={<PlaylistPage />} />
+          <Route path="/playlist" element={<PlaylistPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/trending" element={<Trending />} />
         </Route>
       </Routes>
     </BrowserRouter>

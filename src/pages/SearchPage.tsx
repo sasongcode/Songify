@@ -120,6 +120,7 @@ if (loading) {
                 transition={{ duration: 0.3 }}
               >
                 <SongCard
+                  id={track.id}
                   title={track.title}
                   artist={track.artist.name}
                   image={track.album.cover_medium}

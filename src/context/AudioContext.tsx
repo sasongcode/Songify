@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useRef, useState } from "react";
 
 interface Song {
-  title: string;
-  artist: string;
-  image: string;
-  url: string;
+    id: number;
+    title: string;
+    artist: string;
+    image: string;
+    url: string;
 }
 
 interface AudioContextType {
@@ -25,6 +26,7 @@ interface AudioContextType {
   toggleRepeat: () => void;
   toggleShuffle: () => void;
   audioRef: React.RefObject<HTMLAudioElement>;
+  setCurrentSong: (song: Song | null) => void;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -132,6 +134,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
         toggleRepeat,
         toggleShuffle,
         audioRef,
+        setCurrentSong,
       }}
     >
       {children}

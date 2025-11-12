@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Compass, Users, Flame, Menu, Library } from "lucide-react";
+import { Home, Compass, Users, Flame, Menu, ListMusic } from "lucide-react";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -12,10 +12,9 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
   const sidebarMenu = [
     { icon: <Home size={20} />, label: "Home", path: "/" },
     { icon: <Flame size={20} />, label: "Trending", path: "/trending" },
-    // { icon: <Music size={20} />, label: "Songs", path: "/songs" },
     { icon: <Compass size={20} />, label: "Genres", path: "/genres" },
     { icon: <Users size={20} />, label: "Artists", path: "/artists" },
-    { icon: <Library size={20} />, label: "Library", path: "/playlist" },
+    { icon: <ListMusic size={20} />, label: "Playlist", path: "/playlist" },
   ];
 
   return (
@@ -72,10 +71,11 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
         </div>
       </aside>
 
+      {/* mobile */}
       {!sidebarOpen && (
         <button
           onClick={toggleSidebar}
-          className="fixed bottom-17 left-5 md:hidden bg-green-500 hover:bg-green-600 text-black p-3 rounded-full shadow-lg z-60"
+          className="fixed bottom-15 left-5 md:hidden bg-green-500 hover:bg-green-600 text-black p-3 rounded-full shadow-lg z-60"
         >
           <Menu size={22} />
         </button>
